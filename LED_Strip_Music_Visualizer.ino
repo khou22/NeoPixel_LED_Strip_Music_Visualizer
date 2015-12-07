@@ -4,7 +4,7 @@
   #include <avr/power.h>
 #endif
 
-#define PIN 6
+#define PIN 12
 
 //For Spectrum analysis
 //Declare Spectrum Shield pin connections
@@ -66,19 +66,22 @@ void setup() {
   stripColor[0] = random(0, 255); //New random color
   stripColor[1] = random(0, 255);
   stripColor[2] = random(0, 255);
+
+  //Strip brightness
+  strip.setBrightness(100);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   Read_Frequencies();
-  Print_Frequencies();
+//  Print_Frequencies();
   Light_LEDS();
 //  Reset_LEDS();
 }
 
 void Read_Frequencies(){
   //Read frequencies for each band
-  for (freq_amp = 0; freq_amp<7; freq_amp++)
+  for (freq_amp = 0; freq_amp<8; freq_amp++)
   {
     Frequencies_One[freq_amp] = ((analogRead(DC_One) + analogRead(DC_One)+analogRead(DC_One)) / 3);
     digitalWrite(STROBE, HIGH);
@@ -87,18 +90,17 @@ void Read_Frequencies(){
 }
 
 void Print_Frequencies(){
-   for( i= 0; i<7; i++)
+   for( i= 0; i<8; i++)
    {
-//    Serial.print(Frequencies_One[i]);
-//    Serial.print(" ");
+    Serial.print(Frequencies_One[i]);
+    Serial.print(" ");
    }
-//   Serial.println();
+   Serial.println();
 }
 
 void Light_LEDS() {
   
-  //Find how many to light up
-  for (i = 0; i < 7; i++) {
+  for (i = 0; i < 8; i++) {
     average += Frequencies_One[i];
     average += -70; //Compensate
   }
@@ -130,7 +132,7 @@ void Light_LEDS() {
 //  Serial.println(brightness);
 
   //Turn on lights
-  for (i = 0; i < 7; i++) {
+  for (i = 0; i < 8; i++) {
     strip.setPixelColor(i, brightness * stripColor[0], brightness * stripColor[1], brightness * stripColor[2]);
     strip.show();
     delay(10);
@@ -138,7 +140,7 @@ void Light_LEDS() {
 }
 
 void Reset_LEDS() {
-  for (i = 0; i < 7; i++) {
+  for (i = 0; i < 8; i++) {
     strip.setPixelColor(i, 0, 0, 0);
     strip.show();
     delay(10);
