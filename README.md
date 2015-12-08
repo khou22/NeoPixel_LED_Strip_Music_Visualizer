@@ -1,6 +1,6 @@
 # NeoPixel_LED_Strip_Music_Visualizer
-Author: Kevin Hou
-Date: December 2, 2015
+Author: Kevin Hou <br />
+Date: December 2, 2015 <br />
 Arduino music visualizer that uses the NeoPixel LED strands to change colors, brightness, etc. in response to the music.
 
 # How It Works
